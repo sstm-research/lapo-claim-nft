@@ -26,7 +26,7 @@ export default async function Home() {
               <div className="w-full aspect-square content-center">
                 <MediaRenderer src={nft.image} client={thirdwebClient} />
               </div>
-              <MintButton minted={nft.minted} uuid={nft.uuid} />
+              <MintButton defaultMinted={nft.minted} uuid={nft.uuid} />
             </div>
           ))}
         </div>
