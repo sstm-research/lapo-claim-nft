@@ -16,6 +16,7 @@ export type Database = {
           image: string
           minted: boolean
           title: string
+          uuid: string
         }
         Insert: {
           created_at?: string
@@ -23,6 +24,7 @@ export type Database = {
           image?: string
           minted?: boolean
           title?: string
+          uuid?: string
         }
         Update: {
           created_at?: string
@@ -30,6 +32,7 @@ export type Database = {
           image?: string
           minted?: boolean
           title?: string
+          uuid?: string
         }
         Relationships: []
       }
