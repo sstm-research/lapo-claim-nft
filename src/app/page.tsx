@@ -7,7 +7,7 @@ import "./globals.css";
 export default async function Home() {
   const supabase = createClient();
 
-  const { data: nfts } = await supabase.from("NFTs").select();
+  const { data: nfts } = await supabase.from("NFTs").select().order("id");
   console.log(nfts);
 
   return (
@@ -20,9 +20,17 @@ export default async function Home() {
               key={nft.id}
               className="rounded-lg p-6 w-fit flex flex-col gap-4 shadow-xl"
             >
-              <p className="text-lg">
+              <a
+                href={
+                  nft.address
+                    ? `https://sepolia.basescan.org/address/${nft.address}`
+                    : "#"
+                }
+                target="_blank"
+                className="text-lg"
+              >
                 #{nft.id} - {nft.title}
-              </p>
+              </a>
               <div className="w-full aspect-square content-center">
                 <MediaRenderer src={nft.image} client={thirdwebClient} />
               </div>

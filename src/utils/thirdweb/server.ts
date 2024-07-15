@@ -1,5 +1,5 @@
 import { createThirdwebClient } from "thirdweb";
 
-const client = createThirdwebClient({
-  secretKey: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!,
+export const serverClient = createThirdwebClient({
+  secretKey: process.env.THIRDWEB_SECRET_KEY!,
 });

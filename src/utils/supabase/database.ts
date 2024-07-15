@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       NFTs: {
         Row: {
+          address: string | null
           created_at: string
           id: number
           image: string
@@ -19,6 +20,7 @@ export type Database = {
           uuid: string
         }
         Insert: {
+          address?: string | null
           created_at?: string
           id?: number
           image?: string
@@ -27,6 +29,7 @@ export type Database = {
           uuid?: string
         }
         Update: {
+          address?: string | null
           created_at?: string
           id?: number
           image?: string

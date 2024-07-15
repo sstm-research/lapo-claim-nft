@@ -1,5 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
+import { wallet } from "@/utils/thirdweb/account";
+import { serverClient } from "@/utils/thirdweb/server";
 import { NextResponse } from "next/server";
+import { baseSepolia } from "thirdweb/chains";
+import { deployERC721Contract } from "thirdweb/deploys";
 
 export async function POST(request: Request) {
   const data = await request.json();
@@ -19,9 +23,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "No NFT found" }, { status: 404 });
   }
 
+  const contractAddress = await deployERC721Contract({
+    chain: baseSepolia,
+    client: serverClient,
+    account: wallet,
+    type: "DropERC721",
+    params: {
+      name: "MyNFT",
+      description: "My NFT contract",
+      symbol: "NFT",
+    },
+  });
+
+  console.log(contractAddress)
+
   await supabase
     .from("NFTs")
-    .update({ minted: true })
+    .update({ minted: true, address: contractAddress })
     .eq("id", nft.id);
     
   return NextResponse.json(nft);
