@@ -5,8 +5,8 @@ import { ThirdwebProvider } from "thirdweb/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "NFT QR Code",
-  description: "NFT QR Code dispenser",
+  title: "DEMO",
+  description: "Claim NFT DEMO",
 };
 
 export default function RootLayout({
