@@ -1,10 +1,6 @@
 "use client";
 
 import { formatEthAddress } from "@/utils/eth";
-import { thirdwebClient } from "@/utils/thirdweb/client";
-import { useState } from "react";
-import { getContract } from "thirdweb";
-import { zoraSepolia } from "thirdweb/chains";
 import {
   useActiveAccount,
   useActiveWallet,
@@ -13,22 +9,12 @@ import {
 import ConnectButton from "./ConnectButton";
 import DisplayNFT from "./DisplayNFT";
 
-const contract = getContract({
-  address: "0xF3C3177058C3591D4931FF979F3900eEd816D7fe",
-  chain: zoraSepolia,
-  client: thirdwebClient,
-});
-
 function ClaimNFT() {
   const account = useActiveAccount();
   const wallet = useActiveWallet();
 
   const { disconnect } = useDisconnect();
   console.log(account && account.address);
-  const [sendindRequest, setSendingRequest] = useState(false);
-
-  // const nfts = useOwnedNfts(contract, account?.address);
-  // console.log({nfts})
 
   return (
     <>
