@@ -2,7 +2,6 @@
 
 import { formatEthAddress } from "@/utils/eth";
 import { thirdwebClient } from "@/utils/thirdweb/client";
-import { Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
@@ -35,17 +34,17 @@ function ClaimNFT() {
     <>
       {account && wallet ? (
         <>
-          <Text
+          <p
             onClick={() => {
               disconnect(wallet);
             }}
             className="absolute cursor-pointer bottom-4 font-bold text-sm font-mono"
           >
             logout
-          </Text>
-          <Text className="font-bold text-2xl font-mono">
+          </p>
+          <p className="font-bold text-2xl font-mono">
             {formatEthAddress(account.address)}
-          </Text>
+          </p>
           <DisplayNFT address={account.address} />
         </>
       ) : (
