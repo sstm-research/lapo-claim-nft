@@ -1,12 +1,17 @@
 "use client";
 
+import { formatEthAddress } from "@/utils/eth";
 import { thirdwebClient } from "@/utils/thirdweb/client";
+import { Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import {
   TransactionButton,
   useActiveAccount,
+  useActiveWallet,
+  useDisconnect,
   useReadContract,
 } from "thirdweb/react";
 import ConnectButton from "./ConnectButton";
@@ -23,33 +28,62 @@ function OwnedNfts({ address }: { address: string }) {
     address: address,
   });
   console.log({ ownedNFTs });
-  return <p>You have {ownedNFTs.data?.length} NFTs</p>
+  return <p>You have {ownedNFTs.data?.length} NFTs</p>;
 }
 
 function ClaimNFT() {
   const account = useActiveAccount();
+  const wallet = useActiveWallet();
+
+  const { disconnect } = useDisconnect();
   console.log(account && account.address);
+  const [sendindRequest, setSendingRequest] = useState(false);
 
   return (
     <>
-      <ConnectButton />
-      {account && <OwnedNfts address={account.address} />}
-      <TransactionButton
-        transaction={() =>
-          claimTo({
-            contract,
-            tokenId: BigInt(2),
-            to: account?.address!,
-            quantity: BigInt(1),
-          })
-        }
-        onError={(error) => alert(`Error: ${error.message}`)}
-        onTransactionConfirmed={async () => {
-          alert("NFT Claimed!");
-        }}
+      {account && wallet && 
+        <>
+          <Text onClick={()=>{disconnect(wallet)}} className="absolute cursor-pointer bottom-4 font-bold text-sm font-mono">
+            logout
+          </Text>
+          <Text className="font-bold text-2xl font-mono">
+            {formatEthAddress(account.address)}
+          </Text>
+        </>
+      }
+      <div
+        className={`
+          ease-in-out active:scale-95
+          shadow-md rounded-xl
+          hover:scale-105 hover:shadow-lg focus:scale-105
+          ${sendindRequest ? "" : ""}
+        `}
       >
-        Claim
-      </TransactionButton>
+        {account ? (
+          <TransactionButton
+            transaction={() =>
+              claimTo({
+                contract,
+                tokenId: BigInt(2),
+                to: account?.address!,
+                quantity: BigInt(1),
+              })
+            }
+            onClick={() => setSendingRequest(true)}
+            onError={(error) => {
+              setSendingRequest(false);
+              alert(`Error: ${error.message}`);
+            }}
+            onTransactionConfirmed={async () => {
+              alert("NFT Claimed!");
+            }}
+          >
+            Claim
+          </TransactionButton>
+        ) : (
+          <ConnectButton />
+        )}
+      </div>
     </>
   );
 }
