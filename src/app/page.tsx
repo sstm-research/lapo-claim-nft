@@ -1,6 +1,4 @@
-
-
-import ConnectButton from "@/components/ConnectButton";
+import ClaimNFT from "@/components/ClaimNFT";
 import MintButton from "@/components/MintButton";
 import { createClient } from "@/utils/supabase/server";
 import { thirdwebClient } from "@/utils/thirdweb/client";
@@ -15,7 +13,7 @@ export default async function Home() {
 
   return (
     <main className="container mx-auto py-4">
-      <ConnectButton />
+      <ClaimNFT />
       <h1 className="text-2xl font-bold mb-4">NFTs</h1>
       {nfts && nfts.length ? (
         <div className="grid grid-cols-3 gap-8">
