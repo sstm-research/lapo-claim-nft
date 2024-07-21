@@ -1,7 +1,7 @@
 import { privateKeyToAccount } from "thirdweb/wallets";
-import { serverClient } from "./server";
- 
+import { twServerClient } from "./server";
+
 export const wallet = privateKeyToAccount({
-  client: serverClient,
+  client: twServerClient,
   privateKey: process.env.WALLET_PRIVATE_KEY!,
 });
