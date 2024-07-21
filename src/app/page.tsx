@@ -13,7 +13,7 @@ export default async function Home() {
     <main className="mx-auto w-full h-screen flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center items-center">
       {nfts?.map((nft) => (
         <div key={nft.id} className="font-mono flex flex-col gap-1 text-center">
-          <Link href={`${PROJECT_URL}/nft/${nft.uuid}`}>
+          <Link href={`/nft/${nft.uuid}`}>
             <QRCode
               size={128}
               bgColor="black"
