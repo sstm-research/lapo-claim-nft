@@ -36,9 +36,10 @@ async function NftPage({ params }: { params: { uuid: string } }) {
     <div
       className={`
         text-[#B1FD00]
-        h-screen flex flex-col gap-12 p-4
+        h-auto flex flex-col gap-12 p-4
         items-center justify-center
-        md:flex-row
+        overflow-x-hidden
+        md:flex-row md:h-screen
       `}
     >
       <QRCode
