@@ -8,7 +8,7 @@ export default async function Home() {
   console.log(nfts);
 
   return (
-    <main className="mx-auto w-full h-screen bg-lime-200 flex flex-col gap-4 justify-center items-center">
+    <main className="mx-auto w-full h-screen flex flex-col gap-4 justify-center items-center">
       <ClaimNFT />
     </main>
   );

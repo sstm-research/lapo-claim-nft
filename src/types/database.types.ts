@@ -15,7 +15,7 @@ export type Database = {
           created_at: string;
           id: number;
           image: string;
-          minted: boolean;
+          owner: string | null;
           title: string;
           token_id: number;
           uuid: string;
@@ -25,7 +25,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           image?: string;
-          minted?: boolean;
+          owner?: string | null;
           title?: string;
           token_id?: number;
           uuid?: string;
@@ -35,7 +35,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           image?: string;
-          minted?: boolean;
+          owner?: string | null;
           title?: string;
           token_id?: number;
           uuid?: string;

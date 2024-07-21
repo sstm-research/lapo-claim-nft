@@ -1,9 +1,10 @@
+import ClaimButton from "@/components/ClaimButton";
 import { PROJECT_URL } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { twServerClient } from "@/utils/thirdweb/server";
 import { notFound } from "next/navigation";
 import QRCode from "react-qr-code";
-import { getContract } from "thirdweb";
+import { Address, getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
 import { getNFT } from "thirdweb/extensions/erc1155";
 import { MediaRenderer } from "thirdweb/react";
@@ -32,14 +33,14 @@ async function NftPage({ params }: { params: { uuid: string } }) {
     tokenId: BigInt(supaNft.token_id),
   });
 
+  console.log(nft);
+
   return (
     <div
       className={`
-        text-[#B1FD00]
-        h-auto flex flex-col gap-12 p-4
+        h-screen flex flex-col gap-6 p-4
         items-center justify-center
         overflow-x-hidden
-        md:flex-row md:h-screen
       `}
     >
       <QRCode
@@ -47,21 +48,17 @@ async function NftPage({ params }: { params: { uuid: string } }) {
         bgColor="black"
         fgColor="#B1FD00"
         value={`${PROJECT_URL}/nft/650b549d-374e-4bcf-9f8e-edfe3ecbfdcb`}
+        className="hidden md:visible"
       />
       <MediaRenderer src={nft.metadata.image} client={twServerClient} />
-      <pre className="max-w-full md:w-auto">
-        {JSON.stringify(
-          {
-            id: nft.id.toString(),
-            metadata: nft.metadata,
-            owner: nft.owner,
-            tokenURI: nft.tokenURI,
-            type: nft.type,
-          },
-          null,
-          2,
-        )}
-      </pre>
+
+      <ClaimButton
+        contract={contract}
+        quantity={BigInt(1)}
+        tokenId={BigInt(supaNft.token_id)}
+        owner={supaNft.owner as Address}
+        uuid={params.uuid}
+      />
     </div>
   );
 }
