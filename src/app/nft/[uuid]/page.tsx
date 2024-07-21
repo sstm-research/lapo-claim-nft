@@ -1,6 +1,8 @@
+import { PROJECT_URL } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { twServerClient } from "@/utils/thirdweb/server";
 import { notFound } from "next/navigation";
+import QRCode from "react-qr-code";
 import { getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
 import { getNFT } from "thirdweb/extensions/erc1155";
@@ -33,13 +35,20 @@ async function NftPage({ params }: { params: { uuid: string } }) {
   return (
     <div
       className={`
-        bg-black text-[#B1FD00]
-        h-screen flex gap-12
+        text-[#B1FD00]
+        h-screen flex flex-col gap-12 p-4
         items-center justify-center
+        md:flex-row
       `}
     >
+      <QRCode
+        size={128}
+        bgColor="black"
+        fgColor="#B1FD00"
+        value={`${PROJECT_URL}/nft/650b549d-374e-4bcf-9f8e-edfe3ecbfdcb`}
+      />
       <MediaRenderer src={nft.metadata.image} client={twServerClient} />
-      <pre>
+      <pre className="max-w-full md:w-auto">
         {JSON.stringify(
           {
             id: nft.id.toString(),
