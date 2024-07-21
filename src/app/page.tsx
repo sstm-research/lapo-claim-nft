@@ -1,6 +1,5 @@
 import ClaimNFT from "@/components/ClaimNFT";
 import { createClient } from "@/utils/supabase/server";
-import "./globals.css";
 
 export default async function Home() {
   const supabase = createClient();
