@@ -18,12 +18,13 @@ interface ClaimButtonProps {
 function ClaimButton(props: ClaimButtonProps) {
   const account = useActiveAccount();
   const [owner, setOwner] = useState(props.owner);
-  const [isLoading, setIsLoading] = useState(false);
 
   if (owner) {
     return (
       <p>
-        Owner: <span className="font-bold">{formatEthAddress(owner)}</span>
+        Proprietário:{" "}
+        <span className="font-bold">{formatEthAddress(owner)}</span>
+        {owner === account?.address && <span> (você)</span>}
       </p>
     );
   }
@@ -34,15 +35,6 @@ function ClaimButton(props: ClaimButtonProps) {
 
   return (
     <TransactionButton
-      style={
-        isLoading
-          ? {}
-          : {
-              color: "#B1FD00",
-              backgroundColor: "black",
-              border: "1px solid #B1FD00",
-            }
-      }
       transaction={() =>
         claimTo({
           contract: props.contract,
@@ -55,7 +47,7 @@ function ClaimButton(props: ClaimButtonProps) {
         alert(`Error: ${error.message}`);
       }}
       onTransactionConfirmed={async () => {
-        const res = await fetch("/api/nft", {
+        const res = await fetch("/api/NFT", {
           method: "POST",
           body: JSON.stringify({ uuid: props.uuid, address: account.address }),
           headers: {
@@ -67,7 +59,7 @@ function ClaimButton(props: ClaimButtonProps) {
         }
       }}
     >
-      Claim
+      Resgatar
     </TransactionButton>
   );
 }

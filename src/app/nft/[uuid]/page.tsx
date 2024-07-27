@@ -1,22 +1,14 @@
 import ClaimButton from "@/components/ClaimButton";
-import { PROJECT_URL } from "@/utils/constants";
-import { createClient } from "@/utils/supabase/server";
+import NftRender from "@/components/NftRender";
+import { getNftByUuid } from "@/lib/nfts";
 import { twServerClient } from "@/utils/thirdweb/server";
 import { notFound } from "next/navigation";
-import QRCode from "react-qr-code";
 import { Address, getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
 import { getNFT } from "thirdweb/extensions/erc1155";
-import { MediaRenderer } from "thirdweb/react";
 
 async function NftPage({ params }: { params: { uuid: string } }) {
-  const supabase = createClient();
-
-  const { data: supaNft } = await supabase
-    .from("NFTs")
-    .select()
-    .eq("uuid", params.uuid)
-    .single();
+  const supaNft = await getNftByUuid(params.uuid);
 
   if (!supaNft) {
     notFound();
@@ -33,8 +25,6 @@ async function NftPage({ params }: { params: { uuid: string } }) {
     tokenId: BigInt(supaNft.token_id),
   });
 
-  console.log(nft);
-
   return (
     <div
       className={`
@@ -43,15 +33,7 @@ async function NftPage({ params }: { params: { uuid: string } }) {
         overflow-x-hidden
       `}
     >
-      <QRCode
-        size={128}
-        bgColor="black"
-        fgColor="#B1FD00"
-        value={`${PROJECT_URL}/nft/650b549d-374e-4bcf-9f8e-edfe3ecbfdcb`}
-        className="hidden md:visible"
-      />
-      <MediaRenderer src={nft.metadata.image} client={twServerClient} />
-
+      {nft.metadata.image && <NftRender src={nft.metadata.image} />}
       <ClaimButton
         contract={contract}
         quantity={BigInt(1)}
