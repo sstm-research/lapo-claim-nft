@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DEMO",
-  description: "Claim NFT DEMO",
+  title: "LAPÔ: Resgate de NFT",
+  description: "LAPÔ: Resgate de NFT",
 };
 
 export default function RootLayout({
